@@ -7,74 +7,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.optimize import minimize
 
-# def insulin_curve_fit(con_x, od_y, f):
-#
-#     # Initial guess for the parameters
-#     initial_guess = [0.223811939491137, 0.751267059305653, 0.255095115459269, 0.505957051665142, 0.699076722656686]
-#
-#     # Perform the curve fitting
-#     popt, pcov = curve_fit(f, con_x, od_y, p0=initial_guess)
-#
-#     # Calculate the goodness-of-fit
-#     model_prediction = f(con_x, *popt)
-#     residuals = od_y - model_prediction
-#     ss_res = np.sum(residuals**2)
-#     ss_tot = np.sum((od_y - np.mean(od_y))**2)
-#     r_squared = 1 - (ss_res / ss_tot)
-#
-#     # Plot the data and the curve fit
-#     plot_graph(con_x, od_y, model_prediction)
-#
-#     # Prepare the result
-#     fitresult = {
-#         "y hat": model_prediction,
-#         'params': popt,
-#         'residuals': residuals,
-#         'r_squared': r_squared
-#     }
-#
-#     return fitresult
-#
-# def insulin_curve_fit2(con_x, od_y, f, methods):
-#     # Define the objective function to minimize
-#     def objective(params):
-#         model_prediction = f(con_x, *params)
-#         residuals = od_y - model_prediction
-#         return np.sum(residuals**2)
-#
-#     # Initial guess for the parameters
-#     initial_guess = [0.223811939491137, 0.751267059305653, 0.255095115459269, 0.505957051665142, 0.699076722656686]
-#
-#     if methods == 'Levenberg-Marquardt':
-#         popt, pcov = curve_fit(f, con_x, od_y, p0=initial_guess, ftol = 1.49012e-16)
-#
-#     else:
-#         # Perform the optimization
-#         result = minimize(objective, initial_guess, method = methods, jac = None, tol=1e-16)
-#
-#         # Extract the fitted parameters
-#         popt = result.x
-#
-#     # Calculate the goodness-of-fit
-#     model_prediction = f(con_x, *popt)
-#     residuals = od_y - model_prediction
-#     ss_res = np.sum(residuals**2)
-#     ss_tot = np.sum((od_y - np.mean(od_y))**2)
-#     r_squared = 1 - (ss_res / ss_tot)
-#
-#     # Plot the data and the curve fit
-#     plot_graph2(con_x, od_y, model_prediction)
-#
-#     # Prepare the result
-#     fitresult = {
-#         "Prediction": model_prediction,
-#         'params': popt,
-#         'residuals': residuals,
-#         'r_squared': r_squared
-#     }
-#
-#     return fitresult
-
 def insulin_curve_fit3(con_x, od_y, f, methods, initial_guess):
     # Define the objective function to minimize
     def objective(params):
@@ -85,13 +17,13 @@ def insulin_curve_fit3(con_x, od_y, f, methods, initial_guess):
     if methods == 'Levenberg-Marquardt':
         popt, pcov = curve_fit(f, con_x, od_y, p0=initial_guess, ftol=1.49012e-16, maxfev=100000)
     elif methods == 'BFGS':
-        initial_guess = [0.5, 0.5, 0.5, 0.5, 0.5]  # 示例初始猜测
+        initial_guess = [0.5, 0.5, 0.5, 0.5, 0.5]  #Example initial guess
         result = minimize(objective, initial_guess, method=methods, tol=1e-16)
 
         # Extract the fitted parameters
         popt = result.x
     elif methods == 'Nonlinear-Least-Square':
-        # 使用 least_squares 进行非线性最小二乘拟合
+        #Using Least_Squares for Nonlinear Least Squares Fitting
         result = least_squares(lambda params: f(con_x, *params) - od_y, initial_guess)
         popt = result.x
     else:
