@@ -181,18 +181,18 @@ class App(ctk.CTk):
             False)
 
     def update_formula(self, selected_formula):
-        # 获取选定的公式字符串
+        #Retrieve the selected formula string
         formula_str = selected_formula
         self.update_formula_display(formula_str)
 
-        # 使用正则表达式匹配参数名称
+        #Match parameter names using regular expressions
         param_pattern = re.compile(r'\ba\d+\b')
         params = sorted(set(param_pattern.findall(formula_str)), key=lambda x: int(x[1:]))
 
-        # 动态生成 variable_names
+        #Dynamically generate variable_name
         self.variable_names = "x " + " ".join(params)
 
-        # 使用 Model_function.create_custom_function 创建一个可执行的自定义函数
+        #Create an executable custom function using Model_functional.creat_custom_function
         self.f = Model_function.create_custom_function(formula_str, self.variable_names)
 
         if self.f == None:
@@ -220,7 +220,7 @@ class App(ctk.CTk):
 
             jud = self.update_formula(formula_str)
             if jud == 1:
-                # 禁用编辑
+                #Disable editing
                 self.formula_display.configure(state="disabled")
                 self.confirm_button.configure(state="disabled")
                 self.cancel_button.configure(state="disabled")
@@ -244,13 +244,13 @@ class App(ctk.CTk):
 
     def show_saved_image(self, image_path):
         if os.path.exists(image_path):
-            # 在Windows操作系统中打开图片
+            #Open an image in the Windows operating system
             if os.name == 'nt':
                 os.startfile(image_path)
-            # 在Mac OS中打开图片
+            #Open images in Mac OS
             elif os.name == 'posix':
                 subprocess.run(['open', image_path])
-            # 在Linux中打开图片
+            #Open an image in Linux
             else:
                 subprocess.run(['xdg-open', image_path])
         else:
@@ -261,7 +261,7 @@ class App(ctk.CTk):
                    'Nonlinear-Least-Square']
         num_methods = len(methods)
 
-        # 设置每行显示两个图表
+        #Set to display two charts per row
         cols = 2
         rows = (num_methods + cols - 1) // cols
 
@@ -295,7 +295,7 @@ class App(ctk.CTk):
                 self.text_print(f"Error with {method}: {str(e)}", True)
                 ax.set_title(f'Error with {method}')
 
-        # 添加拟合结果文本框
+        #Add fitting result text box
         for i, method in enumerate(methods):
             ax = axes[i]
             try:
@@ -329,7 +329,7 @@ class App(ctk.CTk):
         self.canvas_widget = canvas_widget
         self.canvas_widget.pack(fill=tk.BOTH, expand=True)
 
-        # 显示保存的图片
+        #Display saved images
         self.show_saved_image("all_methods_graph.png")
 
     # Fit Curve
@@ -377,7 +377,7 @@ class App(ctk.CTk):
 
         if is_error:
             self.result_text.delete('1.0', tk.END)
-        # 添加当前时间
+        #Add current time
         self.result_text.insert(tk.END, "================================================================\n")
         current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.result_text.insert(tk.END, f"{current_time}\n{s}\n")
