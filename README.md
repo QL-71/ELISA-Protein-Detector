@@ -1,4 +1,6 @@
-### Basal Insulin Elisa Curve Fitting Program 📈🔬
+### ELISA Protein Detector 📈🔬
+
+A Python-Based ELISA Tool for Accurate Low-Level ProteinOuantification.
 
 This program 🖥️ is designed for conducting curve fitting in Basal Insulin Enzyme-Linked Immunosorbent Assay (Basal Insulin Elisa) 🧪.
 
