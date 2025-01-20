@@ -9,7 +9,6 @@ def back_calculation(y, f, y0, params):
     conc_c = np.zeros_like(y)
 
 
-
     # Define the function to find the root
     def f_zero(x, y, **kwargs):
         return f(x, **kwargs) - y
